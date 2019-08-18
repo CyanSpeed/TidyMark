@@ -1,5 +1,5 @@
 # TidyMark
-MarkEditor using monaco-editor and electron
+MarkEditor using monaco-editor and electron  
 First front-end Practice project
 
 ### Install
