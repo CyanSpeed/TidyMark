@@ -1,5 +1,5 @@
 {
-  "name": "tidymark-editor",
+  "name": "tidymark",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -7,10 +7,7 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "electron .",
-    "pack": "electron-packager . sample --out=dist --arch=x64 --platform=win32 --electron-version=4.2.9 --overwrite --prune --ignore=dist"
-  },
-  "electronPackagerConfig": {
-    "asar": true
+    "pack": "electron-packager . TidyMark --out=dist --arch=x64 --platform=win32 --electron-version=4.2.9 --overwrite --prune --asar --ignore=dist"
   },
   "author": "",
   "license": "MIT",

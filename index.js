@@ -10,7 +10,7 @@ var editor;
 amdRequire.config({
     'vs/nls': {
         availableLanguages: {
-            'zh': 'cn'
+            '*': 'zh-cn'
         },
     }
 });
