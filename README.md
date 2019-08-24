@@ -1,6 +1,6 @@
 # TidyMark
-MarkEditor using monaco-editor and electron  
-Electron Practice project
+Markdown editor using monaco-editor, electron and markdown-it 
+Electron practice project
 
 ### Install
 ```
