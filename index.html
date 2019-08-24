@@ -1,119 +1,292 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>TidyMark</title>
-    <link rel="stylesheet" href="./github-markdown.css">
-    <style type="text/css">
-      * {
-        box-sizing: border-box;
-      }
-      html, body{
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #monacoContainer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 45%;
-        height: 100%;
-        font-size: 14px;
-        padding-top: 16px;
-        border:1px;
-        border-color: #ccc;
-      }
-      #previewContainer {
-        position:relative;
-        top: 0;
-        left: 50%;
-        width: 45%;
-        height: 100%;
-        font-size: 14px;
-        padding-top: 16px;
-        border:1px;
-        border-color: #ccc;
-      }
-      #statusBar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 40px;
-        font-size: 14px;
-        background: #007acc;
-        color: #ffffff;
-      }
-      #charCount {
-        font-size: 14px;
-      }
-      #charCountDiv {
-        margin-left: 12px;
-        font-size: 14px;
-      }
-      #textarea{
-        display:none;
-      }
-      #refreshEditor{
-        display:none;
-      }
+
+<head>
+  <meta charset="UTF-8">
+  <title>TidyMark</title>
+  <link rel="stylesheet" href="./github-markdown.css">
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #monacoContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 45%;
+      height: 100%;
+      font-size: 14px;
+      padding-top: 16px;
+      border: 1px;
+      border-color: #ccc;
+    }
+
+    #previewContainer {
+      position: relative;
+      top: 0;
+      left: 50%;
+      width: 45%;
+      height: 100%;
+      font-size: 14px;
+      padding-top: 16px;
+      border: 1px;
+      border-color: #ccc;
+    }
+
+    #statusBar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      font-size: 14px;
+      background: #007acc;
+      color: #ffffff;
+    }
+
+    #charCount {
+      font-size: 14px;
+    }
+
+    #charCountDiv {
+      margin-left: 12px;
+      font-size: 14px;
+    }
+
+    #textarea {
+      display: none;
+    }
+
+    #refreshEditor {
+      display: none;
+    }
+
+    .markdown-body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 45px;
+    }
+
+    #popbox-header a {
+      font-size: 24px;
+      text-decoration: none;
+      color: black;
+    }
+
+    /* popbox主体 */
+    .popbox {
+      position: fixed;
+      width: 512px;
+      height: 284px;
+      z-index: 9999;
+      display: none;
+      background-color: white;
+      left: 50%;
+      top: 50%;
+      margin-left: -256px;
+      margin-top: -128px;
+      border: 1px solid gray;
+    }
+
+    /* popbox标题 */
+    .popbox-title {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      margin-bottom: 20px;
+      cursor: move;
+    }
+
+    .popbox-title span a {
+      text-decoration: none;
+      border: 1px solid gray;
+      font-size: 12px;
+      color: black;
+      border-radius: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: #fff;
+      position: absolute;
+      top: -20px;
+      right: -20px;
+    }
+
+    /* 表单 */
+    .popbox-input {
+      margin: 20px 0px 30px 0px;
+    }
+
+    .popbox-input label {
+      float: left;
+      height: 35px;
+      line-height: 35px;
+      width: 90px;
+      padding-left: 10px;
+      text-align: right;
+      font-size: 14px;
+    }
+
+    .popbox-input input.list-input {
+      height: 35px;
+      line-height: 35px;
+      width: 350px;
+      text-indent: 5px;
+    }
+
+    /* popbox 确认按钮 */
+    .popboxSubmit {
+      width: 260px;
+      height: 40px;
+      text-align: center;
+      border: 1px solid gray;
+      background-color: white;
+      margin-left: 120px;
+
+    }
+
+    /* 遮盖层 */
+    .bg {
+      background-color: #000;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0.3;
+      -webkit-opacity: 0.3;
+      -moz-opacity: 0.3;
+      display: none;
+    }
+
+    @media (max-width: 767px) {
       .markdown-body {
-		  box-sizing: border-box;
-		  min-width: 200px;
-		  max-width: 980px;
-		  margin: 0 auto;
-		  padding: 45px;
-	  }
-
-	  @media (max-width: 767px) {
-		  .markdown-body {
-			padding: 15px;
-		}
-	  }
-    </style>
-  </head>
-  <body>
-    <div id="monacoContainer"></div>
-    <textarea id="textarea"></textarea>  
-    <div id="previewContainer" class="markdown-body"></div>
-    <div id="statusBar">
-      <div id="charCountDiv">
-          <p id="charCount"> 0 字符</p>
-      </div>
-    </div>
-    <input type="button" id="refreshEditor"></input>
-    <script>
-      //全局变量
-      var nodeRequire = global.require;
-    </script>
-    <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
-    <script>
-      var amdRequire = global.require;
-      global.require = nodeRequire;
-
-      var path = require('path');
-      function uriFromPath(_path) {
-        var pathName = path.resolve(_path).replace(/\\/g, '/');
-        if (pathName.length > 0 && pathName.charAt(0) !== '/') {
-          pathName = '/' + pathName;
-        }
-        return encodeURI('file://' + pathName);
+        padding: 15px;
       }
-      amdRequire.config({
-        baseUrl: uriFromPath(path.join(__dirname, 'node_modules/monaco-editor/min'))
-      });
-      // workaround monaco-css not understanding the environment
-      self.module = undefined;
-      // workaround monaco-typescript not understanding the environment
-      self.process.browser = true;
-    </script>
+    }
+  </style>
+</head>
 
-    <script>
-      // You can also require other files to run in this process
-      require('./index.js')
-    </script>
-    <script src="./renderer/ipcRenderer.js"></script>
-  </body>
+<body>
+
+  <div id="monacoContainer"></div>
+
+  <textarea id="textarea"></textarea>
+  <article class='markdown-body'>
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+      <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+      <title>document</title>
+      <link rel="stylesheet" href="./katex.min.css"
+        integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+      <link rel="stylesheet" href="./markdown.css">
+      <link rel="stylesheet" href="./highlight.css">
+      <link href="./katex-copytex.min.css" rel="stylesheet" type="text/css">
+      <style>
+        .task-list-item {
+          list-style-type: none;
+        }
+
+        .task-list-item-checkbox {
+          margin-left: -20px;
+          vertical-align: middle;
+        }
+      </style>
+      <style>
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif;
+          font-size: 14px;
+          line-height: 1.6;
+        }
+      </style>
+
+      <script src="./katex-copytex.min.js"></script>
+    </head>
+
+    <body>
+      <div id="previewContainer"></div>
+    </body>
+
+    </html>
+  </article>
+  <!-- 遮盖层 -->
+  <div id="bg" class="bg"></div>
+  <div id="statusBar">
+    <div id="charCountDiv">
+      <p id="charCount"> 0 字符</p>
+    </div>
+  </div>
+  <!-- popbox主体 -->
+  <div id="popbox" class="popbox">
+    <!-- popbox标题 -->
+    <div id="popbox-title" class="popbox-title">
+      文档信息
+    </div>
+    <!-- popbox表单 -->
+    <div id="popbox-form">
+      <div class="popbox-input">
+        <label>文档标题：</label>
+        <input type="text" placeholder="请输入文档标题" id="docTitle" class="list-input" />
+      </div>
+
+      <!-- <div class="popbox-input">
+        <label>图片目录：</label>
+        <input type="password" placeholder="请输入完整图片目录（没有则保持为空）" class="list-input" />
+      </div> -->
+    </div>
+    <!-- 确认按钮 -->
+    <input type="submit" id="popboxSubmit" value="确认" class="popboxSubmit" onclick="" />
+  </div>
+
+  <input type="button" id="refreshEditor"></input>
+  <script>
+    //全局变量
+    var nodeRequire = global.require;
+  </script>
+  <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
+  <script>
+    var amdRequire = global.require;
+    global.require = nodeRequire;
+
+    var path = require('path');
+
+    function uriFromPath(_path) {
+      var pathName = path.resolve(_path).replace(/\\/g, '/');
+      if (pathName.length > 0 && pathName.charAt(0) !== '/') {
+        pathName = '/' + pathName;
+      }
+      return encodeURI('file://' + pathName);
+    }
+    amdRequire.config({
+      baseUrl: uriFromPath(path.join(__dirname, 'node_modules/monaco-editor/min'))
+    });
+    // workaround monaco-css not understanding the environment
+    self.module = undefined;
+    // workaround monaco-typescript not understanding the environment
+    self.process.browser = true;
+  </script>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./index.js')
+  </script>
+  <script src="./renderer/ipcRenderer.js"></script>
+</body>
+
 </html>

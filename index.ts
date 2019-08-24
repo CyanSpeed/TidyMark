@@ -46,4 +46,14 @@ function onModuleLoaded() {
         editor.setValue( textarea.value );
     };
 }
+
+//点击"确认",隐藏窗口和遮盖层
+var closeBtn = document.getElementById('popboxSubmit');
+var popbox = document.getElementById('popbox');
+var bg = document.getElementById('bg');
+closeBtn.onclick = function () {
+  popbox.style.display = "none";
+  bg.style.display = "none";
+  return false;
+}    
   

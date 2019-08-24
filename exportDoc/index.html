@@ -1,139 +1,211 @@
 <html>
+      <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>123</title>
+        <link rel="stylesheet" href="./css/github-markdown.css">
+        <link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css" />
+        <style>
+          pre {
+            counter-reset: line-numbering;
+            border: solid 1px #d9d9d9;
+            border-radius: 0;
+            background: #fff;
+            padding: 0;
+            line-height: 23px;
+            margin-bottom: 30px;
+            white-space: pre;
+            overflow-x: auto;
+            word-break: inherit;
+            word-wrap: inherit;
+          }
+      
+          pre a::before {
+            content: counter(line-numbering);
+            counter-increment: line-numbering;
+            padding-right: 1em;
+            /* space after numbers */
+            width: 25px;
+            text-align: right;
+            opacity: 0.7;
+            display: inline-block;
+            color: #aaa;
+            background: #eee;
+            margin-right: 16px;
+            padding: 2px 10px;
+            font-size: 13px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+      
+          pre a:first-of-type::before {
+            padding-top: 10px;
+          }
+      
+          pre a:last-of-type::before {
+            padding-bottom: 10px;
+          }
+      
+          pre a:only-of-type::before {
+            padding: 10px;
+          }
+      
+          .highlight {
+            background-color: #ffffcc
+          }
+      
+          /* RIGHT */
+        </style>
+      </head>
+      
+      <body>
+        <div>
+          <div style='width:25%;background: #007ACC !important;'>
+            <ul id="tree" class="ztree" style='width:100%;background: #007ACC;'>
+      
+            </ul>
+          </div>
+          <div id='readme' style='width:70%;'>
+            <article class='markdown-body'>
+              <!DOCTYPE html>
+              <html>
+      
+              <head>
+                <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+                <title>Document</title>
+                <link rel="stylesheet" href="./css/katex.min.css"
+                  integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+                <link rel="stylesheet"
+                  href="./css/markdown.css">
+                <link rel="stylesheet"
+                  href="./css/highlight.css">
+                <link href="./css/katex-copytex.min.css" rel="stylesheet"
+                  type="text/css">
+                <style>
+                  .task-list-item {
+                    list-style-type: none;
+                  }
+      
+                  .task-list-item-checkbox {
+                    margin-left: -20px;
+                    vertical-align: middle;
+                  }
+                </style>
+                <style>
+                  body {
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif;
+                    font-size: 14px;
+                    line-height: 1.6;
+                  }
+                </style>
+      
+                <script src="./js/katex-copytex.min.js"></script>
+              </head>
+      
+              <body>
+              <p><a href="https://electronjs.org" target="_blank"><img src="https://electronjs.org/images/electron-logo.svg" alt="Electron Logo"></a></p>
+<p><a href="https://circleci.com/gh/electron/electron/tree/master" target="_blank"><img src="https://circleci.com/gh/electron/electron/tree/master.svg?style=shield" alt="CircleCI Build Status"></a>
+<a href="https://ci.appveyor.com/project/electron-bot/electron-ljo26/branch/master" target="_blank"><img src="https://ci.appveyor.com/api/projects/status/4lggi9dpjc1qob7k/branch/master?svg=true" alt="AppVeyor Build Status"></a></p>
+<p>📝 Available Translations: 🇨🇳 🇹🇼 🇧🇷 🇪🇸 🇰🇷 🇯🇵 🇷🇺 🇫🇷 🇹🇭 🇳🇱 🇹🇷 🇮🇩 🇺🇦 🇨🇿 🇮🇹 🇵🇱.
+View these docs in other languages at <a href="https://github.com/electron/i18n/tree/master/content/" target="_blank">electron/i18n</a>.</p>
+<p>The Electron framework lets you write cross-platform desktop applications
+using JavaScript, HTML and CSS. It is based on <a href="https://nodejs.org/" target="_blank">Node.js</a> and
+<a href="https://www.chromium.org" target="_blank">Chromium</a> and is used by the <a href="https://github.com/atom/atom" target="_blank">Atom
+editor</a> and many other <a href="https://electronjs.org/apps" target="_blank">apps</a>.</p>
+<p>Follow <a href="https://twitter.com/electronjs" target="_blank">@ElectronJS</a> on Twitter for important
+announcements.</p>
+<p>This project adheres to the Contributor Covenant
+<a href="https://github.com/electron/electron/tree/master/CODE_OF_CONDUCT.md" target="_blank">code of conduct</a>.
+By participating, you are expected to uphold this code. Please report unacceptable
+behavior to <a href="mailto:coc@electronjs.org" target="_blank">coc@electronjs.org</a>.</p>
+<h2>Installation</h2>
+<p>To install prebuilt Electron binaries, use <a href="https://docs.npmjs.com/" target="_blank"><code>npm</code></a>.
+The preferred method is to install Electron as a development dependency in your
+app:</p>
+<pre><code class="hljs language-sh">npm install electron --save-dev [--save-exact]
+</code></pre>
+<p>The <code>--save-exact</code> flag is recommended for Electron prior to version 2, as it does not follow semantic
+versioning. As of version 2.0.0, Electron follows semver, so you don’t need <code>--save-exact</code> flag. For info on how to manage Electron versions in your apps, see
+<a href="docs/tutorial/electron-versioning.md" target="_blank">Electron versioning</a>.</p>
+<p>For more installation options and troubleshooting tips, see
+<a href="docs/tutorial/installation.md" target="_blank">installation</a>.</p>
+<h2>Quick start &amp; Electron Fiddle</h2>
+<p>Use <a href="https://github.com/electron/fiddle" target="_blank"><code>Electron Fiddle</code></a>
+to build, run, and package small Electron experiments, to see code examples for all of Electron’s APIs, and
+to try out different versions of Electron. It’s designed to make the start of your journey with
+Electron easier.</p>
+<p>Alternatively, clone and run the
+<a href="https://github.com/electron/electron-quick-start" target="_blank">electron/electron-quick-start</a>
+repository to see a minimal Electron app in action:</p>
+<pre><code class="hljs language-sh">git <span class="hljs-built_in">clone</span> https://github.com/electron/electron-quick-start
+<span class="hljs-built_in">cd</span> electron-quick-start
+npm install
+npm start
+</code></pre>
+<h2>Resources for learning Electron</h2>
+<ul>
+<li><a href="https://electronjs.org/docs" target="_blank">electronjs.org/docs</a> - all of Electron’s documentation</li>
+<li><a href="https://github.com/electron/fiddle" target="_blank">electron/fiddle</a> - A tool to build, run, and package small Electron experiments</li>
+<li><a href="https://github.com/electron/electron-quick-start" target="_blank">electron/electron-quick-start</a> - a very basic starter Electron app</li>
+<li><a href="https://electronjs.org/community#boilerplates" target="_blank">electronjs.org/community#boilerplates</a> - sample starter apps created by the community</li>
+<li><a href="https://github.com/electron/simple-samples" target="_blank">electron/simple-samples</a> - small applications with ideas for taking them further</li>
+<li><a href="https://github.com/electron/electron-api-demos" target="_blank">electron/electron-api-demos</a> - an Electron app that teaches you how to use Electron</li>
+<li><a href="https://github.com/hokein/electron-sample-apps" target="_blank">hokein/electron-sample-apps</a> - small demo apps for the various Electron APIs</li>
+</ul>
+<h2>Programmatic usage</h2>
+<p>Most people use Electron from the command line, but if you require <code>electron</code> inside
+your <strong>Node app</strong> (not your Electron app) it will return the file path to the
+binary. Use this to spawn Electron from Node scripts:</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> electron = <span class="hljs-built_in">require</span>(<span class="hljs-string">'electron'</span>)
+<span class="hljs-keyword">const</span> proc = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>)
 
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>Title</title>
-  <link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet"
-    type="text/css" />
-  <link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet"
-    type="text/css" />
-  <link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css" />
-  <style>
-    pre {
-      counter-reset: line-numbering;
-      border: solid 1px #d9d9d9;
-      border-radius: 0;
-      background: #fff;
-      padding: 0;
-      line-height: 23px;
-      margin-bottom: 30px;
-      white-space: pre;
-      overflow-x: auto;
-      word-break: inherit;
-      word-wrap: inherit;
-    }
+<span class="hljs-comment">// will print something similar to /Users/maf/.../Electron</span>
+<span class="hljs-built_in">console</span>.log(electron)
 
-    pre a::before {
-      content: counter(line-numbering);
-      counter-increment: line-numbering;
-      padding-right: 1em;
-      /* space after numbers */
-      width: 25px;
-      text-align: right;
-      opacity: 0.7;
-      display: inline-block;
-      color: #aaa;
-      background: #eee;
-      margin-right: 16px;
-      padding: 2px 10px;
-      font-size: 13px;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
+<span class="hljs-comment">// spawn Electron</span>
+<span class="hljs-keyword">const</span> child = proc.spawn(electron)
+</code></pre>
+<h3>Mirrors</h3>
+<ul>
+<li><a href="https://npm.taobao.org/mirrors/electron" target="_blank">China</a></li>
+</ul>
+<h2>Documentation Translations</h2>
+<p>Find documentation translations in <a href="https://github.com/electron/i18n" target="_blank">electron/i18n</a>.</p>
+<h2>Contributing</h2>
+<p>If you are interested in reporting/fixing issues and contributing directly to the code base, please see <a href="CONTRIBUTING.md" target="_blank">CONTRIBUTING.md</a> for more information on what we’re looking for and how to get started.</p>
+<h2>Community</h2>
+<p>Info on reporting bugs, getting help, finding third-party tools and sample apps,
+and more can be found in the <a href="docs/tutorial/support.md#finding-support" target="_blank">support document</a>.</p>
+<h2>License</h2>
+<p><a href="https://github.com/electron/electron/blob/master/LICENSE" target="_blank">MIT</a></p>
+<p>When using the Electron or other GitHub logos, be sure to follow the <a href="https://github.com/logos" target="_blank">GitHub logo guidelines</a>.</p>
 
-    pre a:first-of-type::before {
-      padding-top: 10px;
-    }
-
-    pre a:last-of-type::before {
-      padding-bottom: 10px;
-    }
-
-    pre a:only-of-type::before {
-      padding: 10px;
-    }
-
-    .highlight {
-      background-color: #ffffcc
-    }
-
-    /* RIGHT */
-  </style>
-</head>
-
-<body>
-  <div>
-    <div style='width:25%;background: #007ACC !important;'>
-      <ul id="tree" class="ztree" style='width:100%;background: #007ACC;'>
-
-      </ul>
-    </div>
-    <div id='readme' style='width:70%;'>
-      <article class='markdown-body'>
-        <!DOCTYPE html>
-        <html>
-
-        <head>
-          <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-          <title>介绍</title>
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css"
-            integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
-          <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
-          <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-          <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet"
-            type="text/css">
-          <style>
-            .task-list-item {
-              list-style-type: none;
-            }
-
-            .task-list-item-checkbox {
-              margin-left: -20px;
-              vertical-align: middle;
-            }
-          </style>
-          <style>
-            body {
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif;
-              font-size: 14px;
-              line-height: 1.6;
-            }
-          </style>
-
-          <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
-        </head>
-
-        <body>
-
-        </body>
-
-        </html>
-
-      </article>
-    </div>
-  </div>
-</body>
-
-</html>
-<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
-<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
-<script type="text/javascript" src="toc_conf.js"></script>
-
-<SCRIPT type="text/javascript">
-  //<!--
-  $(document).ready(function () {
-    var css_conf = eval(markdown_panel_style);
-    $('#readme').css(css_conf)
-
-    var conf = eval(jquery_ztree_toc_opts);
-    $('#tree').ztree_toc(conf);
-  });
-  //-->
-</SCRIPT>
+              </body>
+      
+              </html>
+      
+            </article>
+          </div>
+        </div>
+      </body>
+      
+      </html>
+      <script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+      <script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+      <script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+      <script type="text/javascript" src="toc/toc_conf.js"></script>
+      
+      <SCRIPT type="text/javascript">
+        //<!--
+        $(document).ready(function () {
+          var css_conf = eval(markdown_panel_style);
+          $('#readme').css(css_conf)
+      
+          var conf = eval(jquery_ztree_toc_opts);
+          $('#tree').ztree_toc(conf);
+        });
+        //-->
+      </SCRIPT>

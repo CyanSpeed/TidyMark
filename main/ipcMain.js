@@ -111,7 +111,7 @@ let template = [{
     submenu: [{
         label: '关于',
         click: () => {
-          shell.openExternal('https://www.bing.com');
+          shell.openExternal('https://github.com/Aureate-Sunshine/TidyMark');
         }
       },
 
