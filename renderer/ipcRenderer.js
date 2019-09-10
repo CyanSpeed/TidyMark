@@ -348,7 +348,7 @@ ipcRenderer.on("actions", (event, data) => {
  *
  */
 function isSaveFile() {
-  if (!isSaveed) {
+  if (!isSaveed && textarea.value != "") {
     const index = dialog.showMessageBox(null, {
       type: "question",
       buttons: ["保存", "不保存"],

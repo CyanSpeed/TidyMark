@@ -30,8 +30,21 @@
       border-color: #ccc;
     }
 
+    #dragbar {
+      position: fixed;
+      top: 0;
+      left: 45%;
+      width: 4px;
+      height: 100%;
+      border: 1px;
+      border-color: rgb(240, 12, 12);
+      background: gray;
+      cursor: e-resize;
+      float: left;
+    }
+
     #previewContainer {
-      position: relative;
+      position: fixed;
       top: 0;
       left: 50%;
       width: 45%;
@@ -184,7 +197,7 @@
 <body>
 
   <div id="monacoContainer"></div>
-
+  <label id="dragbar"></label>
   <textarea id="textarea"></textarea>
   <article class='markdown-body'>
     <!DOCTYPE html>

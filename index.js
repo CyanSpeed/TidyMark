@@ -25,6 +25,7 @@ function onModuleLoaded() {
         ].join('\n'),
         language: 'markdown',
         automaticLayout: true,
+        wordWrap: "bounded",
         theme: "vs-light",
     });
     editor.onDidChangeModelContent((e) => {
@@ -44,5 +45,36 @@ closeBtn.onclick = function () {
     popbox.style.display = "none";
     bg.style.display = "none";
     return false;
+};
+var dragging = false;
+var doc = document;
+var dragBtn = document.getElementById('dragbar');
+var editordiv = document.getElementById('monacoContainer');
+var previewdiv = document.getElementById('previewContainer');
+var wrapWidth = editordiv.clientWidth;
+var clickX, leftOffset, index, nextW2, nextW;
+var _this = this;
+dragBtn.onmousedown = function (event) {
+    dragging = true;
+    leftOffset = editordiv.offsetLeft;
+    // index = $(this).index(dragBtn);
+    console.log("mousedown");
+};
+document.onmouseup = function (e) {
+    dragging = false;
+    // e.cancelable = true; //禁止事件冒泡
+    console.log("mouseup");
+};
+document.onmousemove = function (e) {
+    console.log("mousemove");
+    if (dragging) {
+        //----------------------------------------------------------------
+        clickX = e.pageX;
+        console.log('鼠标位置：' + clickX);
+        editordiv.style.width = clickX + "px";
+        dragBtn.style.left = clickX + "px";
+        previewdiv.style.left = (100 + clickX) + "px";
+        previewdiv.style.width = (document.body.clientWidth - clickX - 100) + "px";
+    }
 };
 //# sourceMappingURL=index.js.map

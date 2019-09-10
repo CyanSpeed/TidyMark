@@ -27,9 +27,10 @@
     "typescript": "^2.5.2"
   },
   "dependencies": {
+    "@types/jquery": "^3.3.31",
     "archiver": "^3.1.1",
+    "jquery": "^3.4.1",
     "markdown-it": "^8.4.2",
-    "monaco-editor": "^0.17.0",
     "markdown-it-abbr": "^1.0.4",
     "markdown-it-checkbox": "^1.1.0",
     "markdown-it-container": "^2.0.0",
@@ -44,6 +45,7 @@
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-it-toc-and-anchor": "^4.2.0",
-    "markdown-it-underline": "^1.0.1"
+    "markdown-it-underline": "^1.0.1",
+    "monaco-editor": "^0.17.0"
   }
 }
