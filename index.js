@@ -53,6 +53,11 @@ var editordiv = document.getElementById('monacoContainer');
 var previewdiv = document.getElementById('previewContainer');
 var wrapWidth = editordiv.clientWidth;
 var clickX, leftOffset, index, nextW2, nextW;
+window.onresize = function (e) {
+    previewdiv.style.left = (50 + dragBtn.offsetLeft) + "px";
+    previewdiv.style.width = (document.body.clientWidth - dragBtn.offsetLeft) + "px";
+    console.log("resize");
+};
 dragBtn.onmousedown = function (event) {
     dragging = true;
     leftOffset = editordiv.offsetLeft;
@@ -73,7 +78,7 @@ document.onmousemove = function (e) {
         editordiv.style.width = clickX + "px";
         dragBtn.style.left = clickX + "px";
         previewdiv.style.left = (50 + clickX) + "px";
-        previewdiv.style.width = (document.body.clientWidth - clickX - 50) + "px";
+        previewdiv.style.width = (document.body.clientWidth - clickX) + "px";
     }
 };
 //# sourceMappingURL=index.js.map
