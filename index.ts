@@ -66,6 +66,9 @@ var previewdiv = document.getElementById('previewContainer');
 var wrapWidth = editordiv.clientWidth;
 var clickX, leftOffset, index, nextW2, nextW;
 
+previewdiv.style.left = (50 + dragBtn.offsetLeft) + "px";
+previewdiv.style.width = (document.body.clientWidth - dragBtn.offsetLeft) + "px";
+
 window.onresize= function(e){
     previewdiv.style.left = (50 + dragBtn.offsetLeft) + "px";
     previewdiv.style.width = (document.body.clientWidth - dragBtn.offsetLeft) + "px";

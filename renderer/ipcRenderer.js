@@ -60,10 +60,23 @@ function renderHTML(str) {
       }
     });
     let container = document.getElementById("previewContainer");
-    container.innerHTML = r;
+    var length = currentFilePath.lastIndexOf("\\") + 1;
+    var currentFileDir = currentFilePath.substr(0, length);
+    container.innerHTML = replace_img_url(r, currentFileDir);
   } catch (ex) {
     console.log(ex);
   }
+}
+
+function replace_img_url(content, suffix) {
+  content = content.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, function (imgStr, capture) {
+    if (capture.search(":") == -1) {
+      return imgStr.replace(capture, `${suffix}${capture}`);
+    } else {
+      return imgStr;
+    }
+  });
+  return content;
 }
 
 function exportWholeHTML(title, style) {
@@ -277,7 +290,7 @@ menu.append(new MenuItem({
 var inervalId;
 window.onload = ((e) => {
   inervalId = setInterval(function () {
-    renderHTML(textarea.value);
+    renderHTML(textarea.value, true);
     let charCount = document.getElementById("charCount");
     charCount.innerText = textarea.value.length + " 字符";
   }, 500);
@@ -322,6 +335,8 @@ ipcRenderer.on("actions", (event, data) => {
           if (filePaths) {
             textarea.value = fs.readFileSync(filePaths[0]);
             document.getElementById("refreshEditor").click();
+            currentFilePath = filePaths[0];
+            document.title = "TidyMark - " + currentFilePath;
           }
         }
       );
@@ -399,7 +414,9 @@ function saveFilePath() {
 function popBox() {
   var popbox = document.getElementById('popbox');
   var bg = document.getElementById('bg');
+  var docTitle = document.getElementById('docTitle');
 
+  docTitle.value = "";
   popbox.style.display = "block";
   bg.style.display = "block";
 };
@@ -413,14 +430,21 @@ function exportFilePath() {
   var isSaved = false;
   var id = setInterval(() => {
     var popbox = document.getElementById('popbox');
-    if(popbox.style.display === "none"){
-      gotInfo =true;
+    if (popbox.style.display === "none") {
+      gotInfo = true;
     }
-    
-    if(gotInfo == true && isStartSaved == false){
+
+    if (gotInfo == true && isStartSaved == false) {
       isStartSaved = true;
+      var docTitle = document.getElementById('docTitle');
+      var title = docTitle.value;
+      var defaultFilename = "新建文档";
+      if (title) {
+        defaultFilename = title;
+      }
+
       const zipfilePaths = dialog.showSaveDialog({
-        defaultPath: "新建文件.zip",
+        defaultPath: `${defaultFilename}.zip`,
         filters: [{
           name: "All Files",
           extensions: ["*"]
@@ -428,13 +452,12 @@ function exportFilePath() {
       });
       if (zipfilePaths) {
         var htmlpath = __dirname + "\\exportDoc\\index.html";
-        var docTitle = document.getElementById('docTitle');
-        var title = docTitle.value;
+
         console.log("getTitle: " + title);
         if (title) {
           fs.writeFileSync(htmlpath, exportOnlyHTML(title));
           isSaveed = true;
-    
+
           // 创建一个可写文件流，以便把压缩的数据导入
           var output = fs.createWriteStream(zipfilePaths);
           //archiv对象，设置等级
@@ -443,19 +466,19 @@ function exportFilePath() {
               level: 9
             } // Sets the compression level.
           });
-    
+
           output.on('close', function () {
             console.log(archive.pointer() + ' total bytes');
             console.log('archiver has been finalized and the output file descriptor has closed.');
           });
-    
+
           // This event is fired when the data source is drained no matter what was the data source.
           // It is not part of this library but rather from the NodeJS Stream API.
           // @see: https://nodejs.org/api/stream.html#stream_event_end
           output.on('end', function () {
             console.log('Data has been drained');
           });
-    
+
           // good practice to catch warnings (ie stat failures and other non-blocking errors)
           archive.on('warning', function (err) {
             if (err.code === 'ENOENT') {
@@ -465,12 +488,12 @@ function exportFilePath() {
               throw err;
             }
           });
-    
+
           // good practice to catch this error explicitly
           archive.on('error', function (err) {
             throw err;
           });
-    
+
           //管道连接
           archive.pipe(output);
           //压缩文件夹到压缩包
@@ -489,6 +512,5 @@ function exportFilePath() {
         }
       }
     }
-    }, 300);
+  }, 300);
 }
-
