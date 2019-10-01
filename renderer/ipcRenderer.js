@@ -287,6 +287,9 @@ menu.append(new MenuItem({
 //   false
 // );
 
+// 是否已保存， 当前文档路径
+let isSaveed, currentFilePath;
+
 var inervalId;
 window.onload = ((e) => {
   inervalId = setInterval(function () {
@@ -294,10 +297,17 @@ window.onload = ((e) => {
     let charCount = document.getElementById("charCount");
     charCount.innerText = textarea.value.length + " 字符";
   }, 500);
+
+  var filePath = remote.process.argv[1];
+  if (filePath) {
+    textarea.value = fs.readFileSync(filePath);
+    document.getElementById("refreshEditor").click();
+    currentFilePath = filePath;
+    document.title = "TidyMark - " + currentFilePath;
+  }
 });
 
-// 是否已保存， 当前文档路径
-let isSaveed, currentFilePath;
+
 
 // 初始化
 function initEditor() {
@@ -416,7 +426,6 @@ function popBox() {
   var bg = document.getElementById('bg');
   var docTitle = document.getElementById('docTitle');
 
-  docTitle.value = "";
   popbox.style.display = "block";
   bg.style.display = "block";
 };
