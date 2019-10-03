@@ -523,3 +523,27 @@ function exportFilePath() {
     }
   }, 300);
 }
+
+document.ondragenter = document.ondragover = function (event) {
+  // 重写ondragover 和 ondragenter 使其可放置
+  event.preventDefault();
+};
+
+document.ondragleave = function (event) {
+  event.preventDefault();
+};
+
+document.ondrop = function (event) {
+  // 调用 preventDefault() 来避免浏览器对数据的默认处理
+  //（drop 事件的默认行为是以链接形式打开） 
+  event.preventDefault();
+
+  isSaveFile();
+  var filePath = event.dataTransfer.files[0].path;
+  if (filePath) {
+    textarea.value = fs.readFileSync(filePath);
+    document.getElementById("refreshEditor").click();
+    currentFilePath = filePath;
+    document.title = "TidyMark - " + currentFilePath;
+  }
+}
