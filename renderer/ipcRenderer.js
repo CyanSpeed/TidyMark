@@ -298,13 +298,15 @@ window.onload = ((e) => {
     charCount.innerText = textarea.value.length + " 字符";
   }, 500);
 
-  var filePath = remote.process.argv[1];
-  if (filePath) {
-    textarea.value = fs.readFileSync(filePath);
-    document.getElementById("refreshEditor").click();
-    currentFilePath = filePath;
-    document.title = "TidyMark - " + currentFilePath;
-  }
+  setTimeout(function(){
+    var filePath = remote.process.argv[1];
+    if (filePath) {
+      textarea.value = fs.readFileSync(filePath);
+      document.getElementById("refreshEditor").click();
+      currentFilePath = filePath;
+      document.title = "TidyMark - " + currentFilePath;
+    }
+  }, 1000);
 });
 
 

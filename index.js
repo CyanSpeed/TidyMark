@@ -21,13 +21,14 @@ amdRequire(['vs/editor/editor.main'], () => {
 function onModuleLoaded() {
     editor = monaco.editor.create(document.getElementById('monacoContainer'), {
         value: [
-            '',
+            textarea.value,
         ].join('\n'),
         language: 'markdown',
         automaticLayout: true,
         wordWrap: "bounded",
         theme: "vs-light",
     });
+    // editor.setValue(textarea.value);
     editor.onDidChangeModelContent((e) => {
         textarea.value = editor.getValue();
         // alert(textarea.value);

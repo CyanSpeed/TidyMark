@@ -29,7 +29,7 @@ amdRequire(['vs/editor/editor.main'], () => {
 function onModuleLoaded() {
     editor = monaco.editor.create(document.getElementById('monacoContainer'), {
         value: [
-            '',
+            "",
         ].join('\n'),
         language: 'markdown',
         automaticLayout: true,
