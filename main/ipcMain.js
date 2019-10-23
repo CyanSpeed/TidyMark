@@ -1,4 +1,10 @@
-const { app, Menu, shell, ipcMain } = require('electron');
+const {
+  app,
+  Menu,
+  shell,
+  dialog,
+  ipcMain
+} = require('electron');
 
 let template = [{
     label: '文件',
@@ -109,15 +115,29 @@ let template = [{
   {
     label: '帮助',
     submenu: [{
-        label: '关于',
-        click: () => {
-          shell.openExternal('https://github.com/Aureate-Sunshine/TidyMark');
-        }
-      },
-
-      {
         label: '重新加载',
         role: 'forcereload'
+      },
+      {
+        label: '开发者工具',
+        accelerator: 'F12',
+        click: (menuItem, browserWindow, event) => {
+          browserWindow.webContents.openDevTools({mode:'bottom'});
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: '关于',
+        click: () => {
+          dialog.showMessageBox({
+            title: "TidyMark",
+            type: "info",
+            message: " TidyMark \n One more markdown editor desktop App \n\n\n Version：1.0.0 \n License：MIT",
+            buttons: ["OK"]
+          });
+        }
       }
     ]
   }
