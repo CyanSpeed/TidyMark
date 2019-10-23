@@ -291,14 +291,15 @@ menu.append(new MenuItem({
 let isSaveed, currentFilePath;
 
 var inervalId;
-window.onload = ((e) => {
-  inervalId = setInterval(function () {
-    renderHTML(textarea.value, true);
-    let charCount = document.getElementById("charCount");
-    charCount.innerText = textarea.value.length + " 字符";
-  }, 500);
 
-  setTimeout(function(){
+textarea.onclick = (e) => {
+  renderHTML(textarea.value, true);
+  let charCount = document.getElementById("charCount");
+  charCount.innerText = textarea.value.length + " 字符";
+};
+
+window.onload = ((e) => {
+  setTimeout(function () {
     var filePath = remote.process.argv[1];
     if (filePath) {
       textarea.value = fs.readFileSync(filePath);
@@ -308,8 +309,6 @@ window.onload = ((e) => {
     }
   }, 1000);
 });
-
-
 
 // 初始化
 function initEditor() {
@@ -449,6 +448,9 @@ function exportFilePath() {
       isStartSaved = true;
       var docTitle = document.getElementById('docTitle');
       var title = docTitle.value;
+      var imgDir = document.getElementById('docImgDir').value;
+      var imgDirName = path.basename(imgDir);
+      var tempImgDir = path.join(__dirname, "\\exportDoc", imgDirName);
       var defaultFilename = "新建文档";
       if (title) {
         defaultFilename = title;
@@ -505,25 +507,71 @@ function exportFilePath() {
             throw err;
           });
 
+          CopyDirectory(imgDir, tempImgDir);
+
           //管道连接
           archive.pipe(output);
+
           //压缩文件夹到压缩包
           archive.directory(__dirname + "\\exportDoc\\", false);
           //开始压缩
           archive.finalize();
-          dialog.showMessageBox(null, {
-            type: "info",
-            buttons: ["确定"],
-            defaultId: 0,
-            message: "导出成功",
-            title: "导出成功"
-          });
-          isSaved = true;
-          clearInterval(id);
+
+          setTimeout(() => {
+            dialog.showMessageBox(null, {
+              type: "info",
+              buttons: ["确定"],
+              defaultId: 0,
+              message: "导出成功",
+              title: "导出成功"
+            });
+            DeleteDirectory(tempImgDir);
+            isSaved = true;
+            clearInterval(id);
+          }, 1500);
         }
       }
     }
   }, 300);
+}
+
+function CopyDirectory(src, dest) {
+  if (fs.existsSync(dest) == false) {
+    fs.mkdirSync(dest);
+  }
+  if (fs.existsSync(src) == false) {
+    return false;
+  }
+  console.log("src:" + src + ", dest:" + dest);
+  // 拷贝新的内容进去
+  var dirs = fs.readdirSync(src);
+  dirs.forEach(function (item) {
+    var item_path = path.join(src, item);
+    var temp = fs.statSync(item_path);
+    if (temp.isFile()) { // 是文件
+      // console.log("Item Is File:" + item);
+      fs.copyFileSync(item_path, path.join(dest, item));
+    } else if (temp.isDirectory()) { // 是目录
+      // console.log("Item Is Directory:" + item);
+      CopyDirectory(item_path, path.join(dest, item));
+    }
+  });
+}
+
+function DeleteDirectory(dir) {
+  if (fs.existsSync(dir) == true) {
+    var files = fs.readdirSync(dir);
+    files.forEach(function (item) {
+      var item_path = path.join(dir, item);
+      // console.log(item_path);
+      if (fs.statSync(item_path).isDirectory()) {
+        DeleteDirectory(item_path);
+      } else {
+        fs.unlinkSync(item_path);
+      }
+    });
+    fs.rmdirSync(dir);
+  }
 }
 
 document.ondragenter = document.ondragover = function (event) {

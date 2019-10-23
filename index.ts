@@ -39,6 +39,7 @@ function onModuleLoaded() {
 
     editor.onDidChangeModelContent((e) => {
         textarea.value = editor.getValue();
+        textarea.click();
         // alert(textarea.value);
     });
 
