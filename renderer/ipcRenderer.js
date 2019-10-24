@@ -300,13 +300,21 @@ textarea.onclick = (e) => {
 
 window.onload = ((e) => {
   setTimeout(function () {
-    var filePath = remote.process.argv[1];
+    var filePath;
+    if (remote.process.argv[1] != 'open') {
+      filePath = remote.process.argv[1];
+    } else {
+      filePath = remote.process.argv[2];
+    }
+
     if (filePath) {
       textarea.value = fs.readFileSync(filePath);
       document.getElementById("refreshEditor").click();
       currentFilePath = filePath;
+      localStorage.setItem('currentFilePath', currentFilePath);
       document.title = "TidyMark - " + currentFilePath;
     }
+
   }, 1000);
 });
 
@@ -315,6 +323,7 @@ function initEditor() {
   document.title = "TidyMark - " + "新建文件.md";
   isSaveed = false;
   currentFilePath = "";
+  localStorage.setItem('currentFilePath', currentFilePath);
   textarea.value = "";
   document.getElementById("refreshEditor").click();
 }
@@ -347,6 +356,7 @@ ipcRenderer.on("actions", (event, data) => {
             textarea.value = fs.readFileSync(filePaths[0]);
             document.getElementById("refreshEditor").click();
             currentFilePath = filePaths[0];
+            localStorage.setItem('currentFilePath', currentFilePath);
             document.title = "TidyMark - " + currentFilePath;
           }
         }
@@ -410,6 +420,8 @@ function saveFilePath() {
     });
     if (filePaths) {
       currentFilePath = filePaths;
+      localStorage.setItem('currentFilePath', currentFilePath);
+
       fs.writeFileSync(currentFilePath, textarea.value);
       isSaveed = true;
       document.title = "TidyMark - " + currentFilePath;
@@ -594,6 +606,19 @@ document.ondrop = function (event) {
     textarea.value = fs.readFileSync(filePath);
     document.getElementById("refreshEditor").click();
     currentFilePath = filePath;
+    localStorage.setItem('currentFilePath', currentFilePath);
     document.title = "TidyMark - " + currentFilePath;
   }
+}
+
+document.getElementById("choosseImgDirBtn").onclick = (e) => {
+  dialog.showOpenDialog({
+      properties: ["openDirectory"]
+    },
+    filePaths => {
+      if (filePaths) {
+        document.getElementById('docImgDir').value = filePaths[0];
+      }
+    }
+  );
 }
