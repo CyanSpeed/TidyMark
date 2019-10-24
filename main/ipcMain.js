@@ -122,7 +122,9 @@ let template = [{
         label: '开发者工具',
         accelerator: 'F12',
         click: (menuItem, browserWindow, event) => {
-          browserWindow.webContents.openDevTools({mode:'bottom'});
+          browserWindow.webContents.openDevTools({
+            mode: 'bottom'
+          });
         }
       },
       {
@@ -134,7 +136,7 @@ let template = [{
           dialog.showMessageBox({
             title: "TidyMark",
             type: "info",
-            message: " TidyMark \n One more markdown editor desktop App \n\n\n Version：1.0.0 \n License：MIT",
+            message: " TidyMark \n One more markdown editor App \n\n\n Version：1.0.0 \n License：MIT",
             buttons: ["OK"]
           });
         }
@@ -145,9 +147,6 @@ let template = [{
 
 const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
-
-
-
 
 ipcMain.on('exit-app', () => {
   app.quit();
